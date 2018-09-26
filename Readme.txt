@@ -1,5 +1,8 @@
 # docker-php-mysql-template 
 # Readme.txt 
+# Author: Ben Sun
+# Date: 2018/09/25
+# required software: docker, docker-compose
 
 A. Untar docker-php-mysql-template.tgz
    mv docker-php-mysql-template docker-php-mysql-[YOUR_APP]
