@@ -27,7 +27,7 @@ services:
   mysql5.6-3316:
     image: mysql:5.6
     volumes:
-      - ./mysql:/var/lib/mysql
+      - mysql5.6-3316:/var/lib/mysql
     container_name: mysql5.6-3316 
     ports:
       - "3316:3306"
@@ -49,3 +49,5 @@ services:
     container_name: maildev8190 
     ports:
      - "8190:80"
+volumes:
+  mysql5.6-3316:
