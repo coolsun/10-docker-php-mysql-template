@@ -1,1 +1,55 @@
-docker-compose.yml.7.0-fpm
+#https://gist.github.com/michaelneu/2ca7987ef00fa3fbe4fd7b9c07834cc7
+version: '3'
+services:
+  web8100:
+    image: nginx:1.14.0
+    ports:
+      - "8100:80"
+    # uncomment port 443 for https
+    # - "443:443"
+    container_name: web8100 
+    volumes:
+      - ./code:/code
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl/certs:/etc/nginx/ssl/certs
+    links:
+      - php9100
+  php9100:
+    build: 
+      context: .
+      dockerfile: Dockerfile.7.0-fpm
+    volumes: 
+      - ./code:/code
+    image: php9100:7.0-fpm
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
+    links:
+      - mysql5.6-3316
+      - maildev8190
+  mysql5.6-3316:
+    image: mysql:5.6
+    volumes:
+      - mysql5.6-3316:/var/lib/mysql
+    container_name: mysql5.6-3316 
+    ports:
+      - "3316:3306"
+    environment: 
+      - MYSQL_ROOT_PASSWORD=password
+  phpmyadmin8180:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql5.6-3316:db
+    ports:
+      - "8180:80"
+    container_name: phpmyadmin8180 
+    environment:
+      - PMA_USER=root
+      - PMA_PASSWORD=password
+      - PHP_UPLOAD_MAX_FILESIZE=100MB
+  maildev8190:
+    image: djfarrelly/maildev
+    container_name: maildev8190 
+    ports:
+     - "8190:80"
+volumes:
+  mysql5.6-3316:

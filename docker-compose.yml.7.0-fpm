@@ -15,7 +15,9 @@ services:
     links:
       - php9100
   php9100:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile.7.0-fpm
     volumes: 
       - ./code:/code
     image: php9100:7.0-fpm

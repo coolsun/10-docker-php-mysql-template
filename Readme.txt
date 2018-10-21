@@ -1,33 +1,33 @@
 # docker-php-mysql-template 
 # Readme.txt 
-# Author: Ben Sun
-# Date: 2018/09/25
-# required software: docker, docker-compose
 
 A. Untar docker-php-mysql-template.tgz
    mv docker-php-mysql-template docker-php-mysql-[YOUR_APP]
    cd docker-php-mysql-[YOUR_APP]
 
 B. Change 1 to 2-8 port or port x
-In ./docker-compose.yml
+In docker-compose.yml
 1. Change 81 to 8x (8100 to 8x00, 8180 to 8x80, 8190 to 8x90)
 2. Change 91 to 9x (9100 to 9x00)
 3. Change 16 to x6 (3316 to 33x6)
-In ./nginx/conf.d/nginx.conf
+In nginx/conf.d/nginx.conf
 4. Change 91 to 9x (9100 to 9x00)
 
 C. Choose 7.0-fpm or 5.6-fpm
 1. default is 7.0-fpm
-2. use the Docker.5.6-fpm and docker-compose.yml.5.6-fpm for 5.6-fpm.
-  rm Docker; ln -s Docker.5.6-fpm Docker
-  rm docker-compose.yml; ln -s docker-compose.yml.5.6-fpm docker-compose.yml
+  1. use docker-compose.yml.5.6-fpm for 5.6-fpm.
+     cp docker-compose.yml.5.6-fpm docker-compose.yml
+     docker-compose up   # auto rebuild
+  2. switch back to 7.0-fpm
+     cp docker-compose.yml.7.0-fpm docker-compose.yml
+     docker-compose up   # auto rebuild
 
 D. SSL is off at the moment.
 1. It is only set up in 01-docker-php-mysql-ypets
   In docker-compose.yml
   1. Uncomment '443:443'
   2. cp -r 01-docker-php-mysql-ypets/nginx/ssl to destination folder
-  In ./nginx/conf.d/nginx.conf
+  In nginx/conf.d/nginx.conf
   3. Uncomment the following lines.  Update the correct ssl_certificate and ssl_certificate_key files 
 
     # Uncomment for https
@@ -44,6 +44,6 @@ E. Start up
   $ docker-compose down;sleep 3; docker-compose up
 2. Use a browse and go to localhost:8x00/info.php to see output from phpinfo
 3. Use a browse and go to localhost:8x80 => phpmyadmin8x80
-  import sql data into database
-4. Copy your code to ./code directory
+  import data 
+4. Copy your code to code directory
 
